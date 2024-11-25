@@ -2,7 +2,7 @@
 
 DELIMITER $$
 CREATE TRIGGER resets_valid_email
-AFTER UPDATE
+BEFORE UPDATE
 ON users FOR EACH ROW
 BEGIN
 	set users.valid_email = 1 - users.valid_email;
