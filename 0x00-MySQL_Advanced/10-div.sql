@@ -2,8 +2,9 @@
 -- returns 0 if the second number is equal to 0.
 
 DELIMITER $$
+DROP FUNCTION IF EXISTS SafeDiv;
 CREATE FUNCTION SafeDiv(a INT, b INT)
-RETURNS INT DETERMINISTIC
+RETURNS FLOAT DETERMINISTIC
 BEGIN 
 DECLARE result INT;
 SET result = 0;
