@@ -9,7 +9,7 @@ DROP PROCEDURE IF EXISTS ComputeAverageScoreForUser $$
 CREATE PROCEDURE ComputeAverageScoreForUser(IN userID INT)
 BEGIN
 	DECLARE avgScore INT;
-	SELECT FLOOR(AVG(score)) INTO avgScore FROM corrections WHERE user_id = userID ;
-	UPDATE users SET average_score = avgScore where id = userID;
+	SELECT AVG(score) INTO avgScore FROM corrections WHERE user_id = userID ;
+	UPDATE users SET average_score = avgScore WHERE id = userID;
 END $$
 DELIMITER ;
