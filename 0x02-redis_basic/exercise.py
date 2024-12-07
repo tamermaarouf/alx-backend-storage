@@ -1,7 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 '''Create a Cache class'''
 import redis
 import uuid
+from typing import Any, Callable, Union
 
 
 class Cache():
@@ -11,7 +12,7 @@ class Cache():
     def __init__(self):
         self._redis = redis.Redis()
 
-    def store(self, data:  Union[str, bytes, int, float]) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         '''store the input data in Redis
         using the random key and return the key.'''
         create_key = str(uuid.uuid4())
