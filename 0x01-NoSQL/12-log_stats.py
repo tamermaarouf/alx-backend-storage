@@ -14,21 +14,10 @@ from pymongo import MongoClient
 
 
 def log_stats(nginx_collection):
-    ''' Prints stats about Nginx request logs.
-    client = MongoClient('mongodb://127.0.0.1:27017')
-    nginx_collection = client.logs.nginx
-    '''
+    ''' Prints stats about Nginx request logs.'''
     print("{} logs".format(nginx_collection.count_documents({})))
     print('Methods:')
-    logs = nginx_collection.find({})
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    '''
-    result = nginx_collection.aggregate(
-            [{"$match": {"method":
-             {"$in": ["GET", "POST", "PUT", "PATCH", "DELETE"] }}},
-             { "$group": { "_id": "$method", "count": { "$sum": 1 } } },
-             {"$sort" : {"count": -1}}])
-    '''
     for word in methods:
         print("\tmethod {}: {}".format(
             word, (nginx_collection.count_documents({"method": word}))))
