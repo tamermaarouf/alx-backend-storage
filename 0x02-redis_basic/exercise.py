@@ -19,3 +19,14 @@ class Cache():
         create_key = str(uuid.uuid4())
         self._redis.set(create_key, data)
         return (create_key)
+
+    def get(self, key: str,
+            fn: callable = None) -> Union[str, bytes, int, float]:
+        data = self._redis.get(key)
+        return fn(data) if fn is not None else data
+
+    def get_str(self, key: str) -> str:
+        return self.get(key, lambda x: x.decode('utf-8'))
+
+    def get_int(self, key: str) -> int:
+        return self.get(key, lambda x: int(x))
