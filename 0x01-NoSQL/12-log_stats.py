@@ -11,13 +11,13 @@ second line: Methods:
 ["GET", "POST", "PUT","PATCH", "DELETE"]
 '''
 from pymongo import MongoClient
-import pprint
 
 
-def log_stats():
-    ''' Prints stats about Nginx request logs.'''
+def log_stats(nginx_collection):
+    ''' Prints stats about Nginx request logs.
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
+    '''
     print("{} logs".format(nginx_collection.count_documents({})))
     print('Methods:')
     logs = nginx_collection.find({})
@@ -33,4 +33,14 @@ def log_stats():
         print("\tmethod {}: {}".format(
             word, (nginx_collection.count_documents({"method": word}))))
     print("{} status check".format(
-        nginx_collection.count_documents({'path': '/status'})))
+        nginx_collection.count_documents({'method': 'GET', 'path': '/status'})))
+
+
+def run():
+    client = MongoClient('mongodb://127.0.0.1:27017')
+    nginx_collection = client.logs.nginx
+    log_stats(nginx_collection)
+
+
+if __name__ == '__main__':
+    run()
