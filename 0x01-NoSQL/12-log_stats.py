@@ -32,8 +32,8 @@ def log_stats(nginx_collection):
     for word in methods:
         print("\tmethod {}: {}".format(
             word, (nginx_collection.count_documents({"method": word}))))
-    print("{} status check".format(
-        nginx_collection.count_documents({'method': 'GET', 'path': '/status'})))
+    print("{} status check".format(nginx_collection.count_documents(
+        {'method': 'GET', 'path': '/status'})))
 
 
 def run():
