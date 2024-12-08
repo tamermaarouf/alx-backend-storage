@@ -22,9 +22,11 @@ def call_history(method: Callable) -> Callable:
         input_key = f'(key):inputs'
         input_data = str(args)
         self._redis.rpush(input_key, input_data)
-        print(input_data)
-        print(args, kwds)
-        return method(self, *args, **kwds)
+        print(':', input_data)
+        output = method(self, *args, **kwds)
+        output_data = self._redis.get(output)
+        print(output_data)
+        return output
     return wrapper
 
 
