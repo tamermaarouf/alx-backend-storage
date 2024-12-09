@@ -31,8 +31,10 @@ def call_history(method: Callable) -> Callable:
 
 
 def replay(method: Callable) -> None:
-    '''replay function to display the history
-    of calls of a particular function.'''
+    ''' Check redis for how many times a function was called and display:
+    How many times it was called
+    Function args and output for each call
+    '''
     key = method.__qualname__
     client = redis.Redis()
     input_key = f'{key}:inputs'
