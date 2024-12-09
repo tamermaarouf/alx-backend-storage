@@ -39,7 +39,7 @@ def replay(method: Callable) -> None:
     output_key = f'{key}:outputs'
     input_data = client.lrange(input_key, 0, -1)
     output_data = client.lrange(output_key, 0, -1)
-    call_count = len(input_data)
+    call_count = client.get(key).decode('utf-8')
     print('{} was called {} times: '.format(key, call_count))
     for inputs, outputs in zip(input_data, output_data):
         print('{}(*{}) -> {}'.format(key, inputs.decode('utf-8'),
