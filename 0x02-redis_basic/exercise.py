@@ -37,13 +37,14 @@ def replay(method: Callable) -> None:
     client = redis.Redis()
     input_key = f'{key}:inputs'
     output_key = f'{key}:outputs'
-    input_data = client.lrange(input_key, 0, -1)
-    output_data = client.lrange(output_key, 0, -1)
+    input_data = [input.decode('utf-8') for input in
+                  client.lrange(input_key, 0, -1)]
+    output_data = [output.decode('utf-8') for output in
+                   client.lrange(output_key, 0, -1)]
     call_count = client.get(key).decode('utf-8')
     print('{} was called {} times:'.format(key, call_count))
     for inputs, outputs in zip(input_data, output_data):
-        print('{}(*{}) -> {}'.format(key, inputs.decode('utf-8'),
-                                     outputs.decode('utf-8')))
+        print('{}(*{}) -> {}'.format(key, inputs, outputs))
 
 
 class Cache():
