@@ -40,10 +40,10 @@ def replay(method: Callable) -> None:
     input_data = client.lrange(input_key, 0, -1)
     output_data = client.lrange(output_key, 0, -1)
     call_count = client.get(key).decode('utf-8')
-    print('{} was called {} times: '.format(key, call_count))
+    print('{} was called {} times:'.format(key, call_count))
     for inputs, outputs in zip(input_data, output_data):
         print('{}(*{}) -> {}'.format(key, inputs.decode('utf-8'),
-                                     outputs))
+                                     outputs.decode('utf-8')))
 
 
 class Cache():
